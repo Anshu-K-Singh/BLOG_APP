@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.http import require_POST
 from .models import Post
 from django.core.paginator import Paginator
 from django.views.generic import ListView
-from .forms import EmailPostForm
+from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 # Create your views here.
 
@@ -14,7 +15,7 @@ from django.core.mail import send_mail
 
     page_number  = request.GET.get('page', 1)
     posts = paginator.page(page_number)
-    
+
     return render(request, "blog/post/list.html", {"posts": posts})
 """
 
@@ -30,6 +31,12 @@ class PostListView(ListView):
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post, publish__year=year, publish__month=month, publish__day=day)    
+    # list of active comments for this post
+    comments = post.comments.filter(active = True)
+    #form for the users to comment
+    form = CommentForm()
+    
+    
     """emailpostform = EmailPostForm()
 
     if request.method == "POST":
@@ -41,7 +48,7 @@ def post_detail(request, year, month, day, post):
             print(cd)
 """
     return render(request, "blog/post/detail.html",
-                  {"post": post},
+                  {"post": post, 'form': form, 'comments': comments},
                   )
 
 def post_share(request, post_id):
@@ -71,12 +78,7 @@ def post_share(request, post_id):
                 f"{cd['name']}\'s comments : {cd['comments']}"
             )
 
-            send_mail(
-                subject = subject,
-                message = message,
-                from_email=None,
-                recipient_list =[cd['to']]
-            )
+            send_mail(subject, message, cd["email"], [cd['to']])
 
             sent = True
 
@@ -88,3 +90,34 @@ def post_share(request, post_id):
         "blog/post/share.html",
         {'post': post,'form' : form, 'sent' : sent}
     )
+
+
+# Comment view
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(
+        Post,
+        id = post_id,
+        status = Post.Status.PUBLISHED
+        )
+    comment = None
+    # A comment was posted
+    form = CommentForm(data = request.POST)
+    if form.is_valid():
+        # create a comment object without saving it to the database
+        comment = form.save(commit = False)
+        # assign the post to the comment
+        comment.post  = post
+        # save the comment in the database
+        comment.save()
+    
+    return render(
+        request,
+        "blog/post/comment.html",
+        {
+            'post' : post,
+            'form' : form,
+            'comment' : comment
+        }
+        )

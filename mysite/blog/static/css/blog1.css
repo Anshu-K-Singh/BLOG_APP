@@ -1,157 +1,160 @@
-/* Swiss Design Colors */
-:root {
-    --primary-blue: #005bb5;
-    --primary-red: #ff3b30;
-    --primary-yellow: #ffcc00;
-    --neutral-gray: #333333;
-    --light-gray: #f4f4f4;
-}
-
+/* Base Styles */
 body {
-    font-family: 'Helvetica', sans-serif;
-    line-height: 1.5;
-    background-color: var(--light-gray);
-    color: var(--neutral-gray);
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  line-height: 1.7;
+  background-color: #f0f4f8; /* Light, neutral background */
+  color: #333; /* Dark text for contrast */
 }
 
-/* Header */
-.main-header {
-    background: var(--primary-blue);
-    padding: 20px;
-    text-align: center;
+/* Link Styles */
+a {
+  color: #007bff; /* Bootstrap primary color for familiarity */
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.2s ease;
 }
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+a:hover {
+  color: #0056b3; /* Darker shade on hover */
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-.logo {
-    font-size: 2em;
-    font-weight: bold;
-    color: white;
+/* Headings */
+h1 {
+  font-weight: 700;
+  font-size: 2.5em;
+  border-bottom: 3px solid #007bff; /* Primary color for headings */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  color: #222;
 }
 
-.main-nav {
-    display: flex;
-    justify-content: center;
+h2 {
+  font-weight: 600;
+  font-size: 1.8em;
+  margin: 30px 0 10px;
+  color: #444;
 }
 
-.nav-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
+/* Layout */
+#content {
+  float: left;
+  width: 65%;
+  padding: 30px;
+  background: #fff; /* Clean background for content */
+  border-radius: 10px; /* Softer corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin-right: 20px; /* Space between content and sidebar */
 }
 
-.nav-list li {
-    margin-right: 20px;
+#sidebar {
+  float: right;
+  width: 30%;
+  padding: 20px;
+  background: #efefef; /* Light gray for sidebar */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.nav-list li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2em;
-    display: flex;
-    align-items: center;
+/* Date and Text Styles */
+p.date {
+  color: #999;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 0;
 }
 
-.nav-list li a svg {
-    margin-right: 8px;
+/* Pagination */
+.pagination {
+  margin: 40px 0;
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Main Content Grid */
-#container {
-    display: grid;
-    grid-template-columns: 1fr;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+/* Form Styles */
+label {
+  display: block;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
-/* Blog Post List */
-.blog-post-list {
-    text-align: left;
+input,
+textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+  transition: border 0.3s ease;
 }
 
-.post-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+input:focus,
+textarea:focus {
+  border-color: #007bff; /* Highlight on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.post-item {
-    background: white;
-    padding: 20px;
-    border-left: 10px solid var(--primary-red);
-    transition: border-color 0.3s;
+input[type="submit"] {
+  font-weight: bold;
+  background: #007bff; /* Bootstrap primary color */
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.post-item:hover {
-    border-color: var(--primary-yellow);
+input[type="submit"]:hover {
+  background: #0056b3; /* Darker shade on hover */
+  transform: translateY(-2px); /* Lift effect */
 }
 
-.post-title {
-    font-size: 1.6em;
-    color: var(--neutral-gray);
-    text-decoration: none;
-    font-weight: bold;
+/* Error List */
+.errorlist {
+  color: #cc0033;
+  padding-left: 10px;
 }
 
-.post-title:hover {
-    text-decoration: underline;
+/* Comments */
+.comment {
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-.date {
-    color: var(--primary-blue);
-    font-size: 0.9em;
-    margin-bottom: 10px;
+.comment:nth-child(even) {
+  background: #f9f9f9; /* Alternate background color */
 }
 
-/* Single Post Detail */
-.post-detail {
-    background: white;
-    padding: 40px;
-    border-left: 10px solid var(--primary-blue);
+.comment .info {
+  font-weight: bold;
+  font-size: 12px;
+  color: #666;
 }
 
-.post-body {
-    font-size: 1.2em;
+/* Clearfix */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
-/* Footer */
-.main-footer {
-    background: var(--primary-blue);
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-/* Geometric Shapes */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url('{% static "images/geometric-shapes.svg" %}');
-    opacity: 0.1;
-    z-index: -1;
-}
-
-/* Responsive Design */
+/* Media Queries */
 @media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-    }
-
-    .post-grid {
-        grid-template-columns: 1fr;
-    }
+  #content,
+  #sidebar {
+    float: none;
+    width: 100%;
+    padding: 10px; /* Reset padding for mobile */
+  }
 }

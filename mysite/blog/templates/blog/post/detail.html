@@ -1,17 +1,33 @@
-{% extends 'blog/base.html' %}
+{% extends "blog/base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<div class="post-detail">
-    <h1 class="post-title">{{ post.title }}</h1>
-    <p class="date">{{ post.publish }} by {{ post.author }}</p>
-    <div class="post-body">{{ post.body|linebreaks }}</div>
-    
-
-</div>
-
-<p>
-    Share this BLog
-    <a href = "{% url "blog:post_share" post.id%}"> here</a>
-</p>
-
+  <h1>{{ post.title }}</h1>
+  <p class="date">
+    Published {{ post.publish }} by {{ post.author }}
+  </p>
+  {{ post.body|linebreaks }}
+  <p>
+    <a href="{% url "blog:post_share" post.id %}">
+      Share this post
+    </a>
+  </p>
+  {% with comments.count as total_comments %}
+    <h2>
+      {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h2>
+  {% endwith %}
+  {% for comment in comments %}
+    <div class="comment">
+      <p class="info">
+        Comment {{ forloop.counter }} by {{ comment.name }}
+        {{ comment.created }}
+      </p>
+      {{ comment.body|linebreaks }}
+    </div>
+  {% empty %}
+    <p>There are no comments yet.</p>
+  {% endfor %}
+  {% include "blog/post/includes/comment_form.html" %}
 {% endblock %}
